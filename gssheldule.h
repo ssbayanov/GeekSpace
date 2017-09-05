@@ -25,13 +25,15 @@ public:
     GSSheldule(QString alias, TypeSheldule type);
 
     void addDate(QDateTime date);
-    void addDates(DateTimeList dates);
+    void setDates(DateTimeList dates);
 
     bool isRunninig();
 
     DateTimeList dateTimes();
 
     TypeSheldule typeSheldule();
+    void setTypeSheldule(const TypeSheldule &typeSheldule);
+    static QDateTime nextDate(QDateTime date, TypeSheldule period);
 
 public slots:
     void callSlot(QString slot);
@@ -53,6 +55,7 @@ private:
     QDateTime _nextDate;
 
     DateTimeList _dates;
+    DateTimeList _updatedDates;
 
     bool _running;
 
@@ -66,7 +69,6 @@ private:
     void setNextDate(QDateTime date);
 
     QDateTime nextDate(QDateTime date);
-
 };
 
 

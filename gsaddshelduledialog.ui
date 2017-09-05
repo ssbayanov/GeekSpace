@@ -6,20 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>469</height>
+    <width>440</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/sheldule</normalon>
+   </iconset>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>471</width>
-     <height>441</height>
+     <x>10</x>
+     <y>0</y>
+     <width>411</width>
+     <height>461</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="centralLayout">
@@ -52,15 +57,15 @@
       </property>
       <widget class="QWidget" name="tabOnce">
        <attribute name="title">
-        <string>Единожды</string>
+        <string>Дата</string>
        </attribute>
        <widget class="QWidget" name="verticalLayoutWidget_2">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>451</width>
-          <height>305</height>
+          <width>391</width>
+          <height>321</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="onceLayout">
@@ -86,65 +91,29 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateTimeEdit" name="dateTimeOnce">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tabDaily">
-       <attribute name="title">
-        <string>Ежедневно</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>391</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="dailyLayout">
-         <property name="leftMargin">
-          <number>5</number>
-         </property>
-         <property name="topMargin">
-          <number>5</number>
-         </property>
-         <property name="rightMargin">
-          <number>5</number>
-         </property>
-         <property name="bottomMargin">
-          <number>5</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Время:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QTimeEdit" name="timeEdit">
-             <property name="minimumSize">
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Дата и время</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="repeatCheckBox">
+             <property name="maximumSize">
               <size>
                <width>100</width>
-               <height>0</height>
+               <height>16777215</height>
               </size>
              </property>
+             <property name="text">
+              <string>Повторять</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QDateTimeEdit" name="dateTimeOnce">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -152,40 +121,45 @@
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item row="1" column="2">
+            <widget class="QComboBox" name="repeatTimeComboBox">
+             <item>
+              <property name="text">
+               <string>День</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Неделю</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Месяц</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Год</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="repeatLabel">
+             <property name="text">
+              <string>Повторять через:</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="tabWeekly">
        <attribute name="title">
-        <string>Еженедельно</string>
+        <string>Неделя</string>
        </attribute>
        <widget class="QWidget" name="verticalLayoutWidget_4">
         <property name="geometry">
@@ -256,105 +230,38 @@
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="tabMonthly">
-       <attribute name="title">
-        <string>Ежемесячно</string>
-       </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_5">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>431</width>
-          <height>291</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="monthlyLayout">
-         <property name="leftMargin">
-          <number>5</number>
-         </property>
-         <property name="topMargin">
-          <number>5</number>
-         </property>
-         <property name="rightMargin">
-          <number>5</number>
-         </property>
-         <property name="bottomMargin">
-          <number>5</number>
-         </property>
-         <item>
-          <widget class="QTableWidget" name="monthlyTable">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="rowCount">
-            <number>31</number>
-           </property>
-           <property name="columnCount">
-            <number>1</number>
-           </property>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <row/>
-           <column/>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tabYearly">
-       <attribute name="title">
-        <string>Ежегодно</string>
-       </attribute>
-       <widget class="QTableView" name="tableView_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>10</y>
-          <width>331</width>
-          <height>261</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Ближайшая дата срабатывания:</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Следующее время срабатывания:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="nextDateTimelabel">
+        <property name="text">
+         <string>никогда</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QDialogButtonBox" name="buttonBox">

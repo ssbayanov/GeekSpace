@@ -9,6 +9,7 @@
 #include "gsaddmoduledialog.h"
 #include "gsaddtimerdialog.h"
 #include "gsaddshelduledialog.h"
+#include "gsaddprocessdialog.h"
 
 namespace Ui {
 class GeekSpaceWindow;
@@ -50,19 +51,24 @@ private slots:
 
 //    void on_actionAddSlot_triggered();
 
-    void on_actionConsole_triggered(bool checked);
+    void hiddenConsole(bool checked);
 
     void appendModules(ModulesList *newModules);
 
     void addModuleItem(GSModule *module);
     void addTimerItem(GSTimer *timer);
     void addShelduleItem(GSSheldule *sheldule);
+    void addProcessItem(GSProcess *process);
+    void addScriptItem(GSScript *script);
 
     void updateConnections();
 
     void updateObjectItem(GSObject *object);
 
     void on_treeModules_itemDoubleClicked(QTreeWidgetItem *item, int column);
+    void doubleClickedBySlot(QTreeWidgetItem *item);
+    void doubleClickedBySignal(QTreeWidgetItem *item);
+    void doubleClickedByObject(QTreeWidgetItem *item);
 
     void signalsProcessor(QString signal);
 
@@ -74,6 +80,10 @@ private slots:
 
     void on_actionAddSignalSheldule_triggered();
 
+    void on_actionAddProcess_triggered();
+
+    void on_actionScript_triggered();
+
 private:
     void loadSettings();
 
@@ -81,13 +91,16 @@ private:
     void writeSettingsModule(GSModule *module);
     void writeSettingsTimer(GSTimer *timer);
     void writeSettingsSheldule(GSSheldule *sheldule);
+    void writeSettingsProcess(GSProcess *process);
+    void writeSettingsScript(GSScript *script);
 
     Ui::GeekSpaceWindow *ui;
 
-    GSAddSlotWindow *addSlotWindow;
+    GSAddSlotWindow *addScriptWindow;
     GSAddModuleDialog *addModuleDialog;
     GSAddSignalTimerDialog *timerDialog;
     GSAddShelduleDialog *shelduleDialog;
+    GSAddProcessDialog *processDialog;
     QSettings *settings;
 
     //QHash <QString, GSModule *> modules;
@@ -97,8 +110,10 @@ private:
     QHash<QString, QString> _connections;
 
     QTreeWidgetItem *modulesItem;
-    QTreeWidgetItem *slotsItem;
-    QTreeWidgetItem *signalsItem;
+    QTreeWidgetItem *timersItem;
+    QTreeWidgetItem *sheldulesItem;
+    QTreeWidgetItem *scriptsItem;
+    QTreeWidgetItem *processesItem;
     QTreeWidgetItem *connectsItem;
 };
 

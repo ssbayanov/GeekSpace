@@ -38,7 +38,11 @@ SOURCES += main.cpp\
     gstimer.cpp \
     gsaddshelduledialog.cpp \
     gsaddtimerdialog.cpp \
-    gssheldule.cpp
+    gssheldule.cpp \
+    gsprocess.cpp \
+    gsaddprocessdialog.cpp \
+    gsscript.cpp \
+    gssavescriptdialog.cpp
 
 HEADERS  += geekspacewindow.h \
     gsmessages.h \
@@ -55,13 +59,19 @@ HEADERS  += geekspacewindow.h \
     gsobjects.h \
     gsaddshelduledialog.h \
     gsaddtimerdialog.h \
-    gssheldule.h
+    gssheldule.h \
+    gsprocess.h \
+    gsaddprocessdialog.h \
+    gsscript.h \
+    gssavescriptdialog.h
 
 FORMS    += geekspacewindow.ui \
     gsaddslotwindow.ui \
     gsappendmoduledialog.ui \
     gsaddshelduledialog.ui \
-    gsaddtimerdialog.ui
+    gsaddtimerdialog.ui \
+    gssavescriptdialog.ui \
+    gsaddprocessdialog.ui
 
 RESOURCES += \
     images.qrc

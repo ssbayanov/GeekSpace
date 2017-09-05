@@ -3,6 +3,9 @@
 
 #include "gsmodule.h"
 #include "gstimer.h"
+#include "gssheldule.h"
+#include "gsprocess.h"
+#include "gsscript.h"
 
 class GSObject;
 

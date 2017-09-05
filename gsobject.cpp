@@ -49,3 +49,8 @@ void GSObject::callSlot(QString slot)
 {
     emit haveError("Неправильный вызов слота");
 }
+
+void GSObject::setAlias(const QString &alias)
+{
+    _alias = alias;
+}

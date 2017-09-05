@@ -112,8 +112,8 @@ void GSModule::setDisplayName(QString newName)
 void GSModule::connectionEstablished()
 {
     pingTimer.start(5000);
-//    qDebug() << "CONNECTED!!! Attempts: "
-//             << attemptsConnect;
+    //    qDebug() << "CONNECTED!!! Attempts: "
+    //             << attemptsConnect;
     writeMessage(QString("GSModule.%1: Подключен!").arg(_alias));
 
     attemptsConnect = 0;
@@ -133,39 +133,45 @@ void GSModule::readMessage()
 
     moduleStream.startTransaction();
 
-//    qDebug() << "Available bytes: " << socket->bytesAvailable();
+    //    qDebug() << "Available bytes: " << socket->bytesAvailable();
 
-    QByteArray message;
+    while(socket->bytesAvailable() > 0) {
+        QByteArray message;
+        moduleStream >> message;
 
-    moduleStream >> message;
+        if (!moduleStream.commitTransaction())
+            return;     // wait for more data
 
-    if (!moduleStream.commitTransaction())
-        return;     // wait for more data
+        if(message.length() > 0) {
+            //        qDebug() << "Have message. Code:" <<  QString("0x%1").arg(message.at(0), 2, 16, QChar('0'));
+            switch (message.at(0)) {
+            case GSM_Pong:
+                hasPing = true;
+                pingCounts = 0;
+                //            qDebug() << "Pong from " << socket->peerAddress();
+                break;
+            case GSM_Info:
+                //            qDebug() << message.right(message.length() - 1);
+                parseInfo(message.right(message.length() - 1));
+                break;
+            case GSM_CallingSignal:
+                if(message.length() > 1)
+                    if(_signalsHash.contains(message.at(1))){
+                        //                    qDebug() << "Have signal!" << _signalsHash.value(message.at(1)) + "()";
 
-    if(message.length() > 0) {
-//        qDebug() << "Have message. Code:" <<  QString("0x%1").arg(message.at(0), 2, 16, QChar('0'));
-        switch (message.at(0)) {
-        case GSM_Pong:
-            hasPing = true;
-            pingCounts = 0;
-//            qDebug() << "Pong from " << socket->peerAddress();
-            break;
-        case GSM_Info:
-//            qDebug() << message.right(message.length() - 1);
-            parseInfo(message.right(message.length() - 1));
-            break;
-        case GSM_CallingSignal:
-            if(message.length() > 1)
-                if(_signalsHash.contains(message.at(1))){
-//                    qDebug() << "Have signal!" << _signalsHash.value(message.at(1)) + "()";
+                        emit haveSignal(_alias + "." + _signalsHash.value(message.at(1)));
+                    }
+                    else {
+                        emit haveError(QString("GSModule.%1: Получен неизвестный сигнал: 0x%2")
+                                       .arg(_alias)
+                                       .arg((quint8) message.at(1), 2, 16, QChar('0')));
+                    }
+                break;
+            default:
+                break;
+            }
 
-                    emit haveSignal(_alias + "." + _signalsHash.value(message.at(1)));
-                }
-            break;
-        default:
-            break;
         }
-
     }
 }
 
@@ -207,12 +213,14 @@ void GSModule::parseInfo(QString infoXML)
 {
     hasInfo = true;
 
+    //qDebug() << "XML DATA!!!" << _alias << infoXML;
+
     QXmlStreamReader *openFile = new QXmlStreamReader(infoXML);
     while (!openFile->atEnd() && !openFile->hasError())
     {
         QXmlStreamReader::TokenType token = openFile->readNext();
         if (token == QXmlStreamReader::Invalid) {
-//            qDebug() << openFile->errorString() << openFile->text();
+            //            qDebug() << openFile->errorString() << openFile->text();
         }
         if (token == QXmlStreamReader::StartDocument)
             continue;

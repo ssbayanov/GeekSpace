@@ -22,7 +22,9 @@ typedef enum TypeObject {
     TO_Object,
     TO_Module,
     TO_Timer,
-    TO_Sheldule
+    TO_Sheldule,
+    TO_Process,
+    TO_Script
 } TypeObject;
 
 const QStringList typeNames = QStringList()
@@ -46,6 +48,8 @@ public:
     void setItem(QTreeWidgetItem *item);
 
     QString alias();
+
+    void setAlias(const QString &alias);
 
 signals:
     void haveMessage(QString msg);

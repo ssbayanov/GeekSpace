@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>GSAddSlotWindow</class>
  <widget class="QMainWindow" name="GSAddSlotWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +14,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GeekSpace Code Editor</string>
+   <string>GeekSpace Редатор сценариев</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/script</normalon>
+   </iconset>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -67,11 +78,11 @@
     </property>
     <addaction name="actionNew"/>
     <addaction name="separator"/>
-    <addaction name="actionOpenSlot"/>
+    <addaction name="actionOpenScript"/>
     <addaction name="actionOpenFromFile"/>
     <addaction name="separator"/>
-    <addaction name="actionSaveSlot"/>
-    <addaction name="actionSaveSlotAs"/>
+    <addaction name="actionSaveScript"/>
+    <addaction name="actionSaveScriptAs"/>
     <addaction name="separator"/>
     <addaction name="actionSaveInFile"/>
    </widget>
@@ -125,15 +136,20 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <widget class="QTreeView" name="treeActions">
+    <widget class="QTreeWidget" name="treeActions">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>10</y>
-       <width>158</width>
-       <height>499</height>
+       <width>151</width>
+       <height>491</height>
       </rect>
      </property>
+     <column>
+      <property name="text">
+       <string>Объекты</string>
+      </property>
+     </column>
     </widget>
    </widget>
   </widget>
@@ -141,12 +157,40 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpenScript"/>
+   <addaction name="separator"/>
+   <addaction name="actionSaveScript"/>
+   <addaction name="actionSaveScriptAs"/>
+   <addaction name="actionSaveDraft"/>
+   <addaction name="separator"/>
+   <addaction name="actionCheck"/>
+   <addaction name="actionRun"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
   </widget>
   <widget class="QDockWidget" name="dockConsole">
    <property name="windowTitle">
@@ -168,23 +212,44 @@
     </widget>
    </widget>
   </widget>
-  <action name="actionSaveSlot">
+  <action name="actionSaveScript">
+   <property name="icon">
+    <iconset>
+     <normalon>:/save.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
-    <string>Сохранить слот</string>
+    <string>Сохранить сценарий</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить сценарий</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSaveSlotAs">
+  <action name="actionSaveScriptAs">
+   <property name="icon">
+    <iconset>
+     <normalon>:/saveAs</normalon>
+    </iconset>
+   </property>
    <property name="text">
-    <string>Сохранить слот как</string>
+    <string>Сохранить сценарий как</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить сценарий как</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normalon>:/newScript</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Новый</string>
    </property>
@@ -200,9 +265,17 @@
     <string>Ctrl+Alt+S</string>
    </property>
   </action>
-  <action name="actionOpenSlot">
+  <action name="actionOpenScript">
+   <property name="icon">
+    <iconset>
+     <normalon>:/open.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
-    <string>Открыть слот</string>
+    <string>Открыть сценарий</string>
+   </property>
+   <property name="toolTip">
+    <string>Открыть сценарий</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -217,6 +290,11 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/undo</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Отменить</string>
    </property>
@@ -225,6 +303,11 @@
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/redo</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Повторить</string>
    </property>
@@ -249,6 +332,11 @@
    </property>
   </action>
   <action name="actionCheck">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/checkScript.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Проверить</string>
    </property>
@@ -257,6 +345,11 @@
    </property>
   </action>
   <action name="actionRun">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/runScript.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Выполнить</string>
    </property>
@@ -284,6 +377,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionSaveDraft">
+   <property name="icon">
+    <iconset>
+     <normalon>:/saveDraft</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить как черновик</string>
+   </property>
+   <property name="toolTip">
+    <string>Сохранить как черновик</string>
    </property>
   </action>
  </widget>

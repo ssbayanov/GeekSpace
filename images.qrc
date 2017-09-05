@@ -1,24 +1,41 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="batmis.png">icons/batmis.png</file>
-        <file alias="batlow.png">icons/batlow.png</file>
-        <file alias="bat20.png">icons/bat20.png</file>
-        <file alias="bat40.png">icons/bat40.png</file>
-        <file alias="bat60.png">icons/bat60.png</file>
-        <file alias="bat80.png">icons/bat80.png</file>
-        <file alias="bat100.png">icons/bat100.png</file>
         <file alias="save.png">icons/save.png</file>
         <file alias="open.png">icons/open.png</file>
         <file alias="exit.png">icons/exit.png</file>
         <file alias="debug.png">icons/debug.png</file>
         <file alias="error.png">icons/error.png</file>
         <file alias="info.png">icons/info.png</file>
-        <file alias="rfName">icons/view-refresh.png</file>
-        <file alias="del">icons/delete.png</file>
-        <file alias="warning.png">icons/warning.png</file>
-        <file alias="connected">icons/connected.png</file>
-        <file alias="disconnected">icons/disconnected.png</file>
-        <file alias="pause">icons/pause.png</file>
-        <file alias="run">icons/run.png</file>
+        <file alias="timer">icons/timer.png</file>
+        <file alias="addCalendar">icons/addCalendar.png</file>
+        <file alias="addModule">icons/addModule.png</file>
+        <file alias="addProcess">icons/addProcess.png</file>
+        <file alias="addTimer">icons/addTimer.png</file>
+        <file alias="shelduleRunned">icons/calendarRunned.png</file>
+        <file alias="shelduleStopped">icons/calendarStopped.png</file>
+        <file alias="moduleConnected">icons/moduleConnected.png</file>
+        <file alias="moduleDisconnected">icons/moduleDisconnected.png</file>
+        <file alias="processRunned">icons/processRunned.png</file>
+        <file alias="processStopped">icons/processStopped.png</file>
+        <file alias="timerRunned">icons/timerRunned.png</file>
+        <file alias="timerStopped">icons/timerStopped.png</file>
+        <file alias="addScript">icons/addScript.png</file>
+        <file alias="script">icons/script.png</file>
+        <file alias="scriptRunned">icons/scriptRunned.png</file>
+        <file alias="scriptStopped">icons/scriptStopped.png</file>
+        <file alias="connection">icons/connection.png</file>
+        <file alias="signal">icons/signal.png</file>
+        <file alias="slot">icons/slot.png</file>
+        <file alias="sheldule">icons/calendar.png</file>
+        <file alias="module">icons/module.png</file>
+        <file alias="process">icons/process.png</file>
+        <file alias="GeekSpace">icons/GeekSpace.png</file>
+        <file alias="newScript">icons/new.png</file>
+        <file alias="redo">icons/redo.png</file>
+        <file alias="saveAs">icons/saveAs.png</file>
+        <file alias="saveDraft">icons/saveDraft.png</file>
+        <file alias="undo">icons/undo.png</file>
+        <file>icons/checkScript.png</file>
+        <file>icons/runScript.png</file>
     </qresource>
 </RCC>

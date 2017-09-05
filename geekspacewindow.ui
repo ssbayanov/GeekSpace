@@ -19,6 +19,11 @@
   <property name="windowTitle">
    <string>GeekSpace</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>:/GeekSpace</normalon>
+   </iconset>
+  </property>
   <property name="animated">
    <bool>false</bool>
   </property>
@@ -84,40 +89,36 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>Файл</string>
     </property>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menuObjects">
     <property name="title">
-     <string>Модуль</string>
+     <string>Объекты</string>
     </property>
-    <addaction name="actionFindModule"/>
-    <addaction name="actionAddModule"/>
-    <addaction name="actionDeleteModule"/>
-   </widget>
-   <widget class="QMenu" name="menu_3">
-    <property name="title">
-     <string>Слоты</string>
-    </property>
-    <widget class="QMenu" name="menu_8">
+    <widget class="QMenu" name="menu_10">
      <property name="title">
       <string>Добавить</string>
      </property>
-     <addaction name="actionAddRunProcess"/>
+     <addaction name="actionAddSignalTimer"/>
+     <addaction name="actionAddSignalSheldule"/>
+     <addaction name="actionAddProcess"/>
+     <addaction name="actionScript"/>
+     <addaction name="actionFindModule"/>
     </widget>
-    <addaction name="menu_8"/>
-    <addaction name="actionDeleteAction"/>
+    <addaction name="menu_10"/>
+    <addaction name="actionDelete"/>
    </widget>
-   <widget class="QMenu" name="menu_4">
+   <widget class="QMenu" name="menuWindow">
     <property name="title">
      <string>Окно</string>
     </property>
     <addaction name="actionConsole"/>
    </widget>
-   <widget class="QMenu" name="menu_5">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Помощь</string>
     </property>
@@ -125,26 +126,10 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menu_6">
-    <property name="title">
-     <string>Сигнал</string>
-    </property>
-    <widget class="QMenu" name="menu_7">
-     <property name="title">
-      <string>Добавить</string>
-     </property>
-     <addaction name="actionAddSignalTimer"/>
-     <addaction name="actionAddSignalSheldule"/>
-    </widget>
-    <addaction name="menu_7"/>
-    <addaction name="actionDeleteSignal"/>
-   </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_2"/>
-   <addaction name="menu_6"/>
-   <addaction name="menu_3"/>
-   <addaction name="menu_4"/>
-   <addaction name="menu_5"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuObjects"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockConsole">
@@ -198,14 +183,39 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="separator"/>
+   <addaction name="actionAddSignalSheldule"/>
+   <addaction name="actionAddSignalTimer"/>
+   <addaction name="actionAddProcess"/>
+   <addaction name="actionScript"/>
   </widget>
   <action name="actionQuit">
+   <property name="icon">
+    <iconset>
+     <normalon>:/exit.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Выход</string>
    </property>
@@ -214,23 +224,12 @@
    </property>
   </action>
   <action name="actionFindModule">
-   <property name="text">
-    <string>Найти</string>
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/addModule</normaloff>:/addModule</iconset>
    </property>
-  </action>
-  <action name="actionAddModule">
    <property name="text">
-    <string>Добавить</string>
-   </property>
-  </action>
-  <action name="actionDeleteModule">
-   <property name="text">
-    <string>Удалить</string>
-   </property>
-  </action>
-  <action name="actionDeleteAction">
-   <property name="text">
-    <string>Удалить</string>
+    <string>Модуль</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -261,27 +260,64 @@
    </property>
   </action>
   <action name="actionAddSignalTimer">
+   <property name="icon">
+    <iconset>
+     <normalon>:/addTimer</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Таймер</string>
    </property>
+   <property name="toolTip">
+    <string>Добавить таймер</string>
+   </property>
   </action>
   <action name="actionAddSignalSheldule">
+   <property name="icon">
+    <iconset>
+     <normalon>:/addCalendar</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Расписание</string>
    </property>
+   <property name="toolTip">
+    <string>Добавить расписание</string>
+   </property>
   </action>
-  <action name="actionDeleteSignal">
+  <action name="actionDelete">
    <property name="text">
     <string>Удалить</string>
    </property>
   </action>
-  <action name="actionAddRunProcess">
+  <action name="actionAddProcess">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/addProcess</normaloff>:/addProcess</iconset>
+   </property>
    <property name="text">
-    <string>Запустить процесс</string>
+    <string>Процесс</string>
+   </property>
+   <property name="toolTip">
+    <string>Добавить процесс</string>
+   </property>
+  </action>
+  <action name="actionScript">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/addScript</normaloff>:/addScript</iconset>
+   </property>
+   <property name="text">
+    <string>Сценарий</string>
+   </property>
+   <property name="toolTip">
+    <string>Добавить сценарий</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

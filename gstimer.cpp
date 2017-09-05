@@ -1,14 +1,15 @@
 #include "gstimer.h"
 
-GSTimer::GSTimer(QString alias, int time, bool repeat)
+GSTimer::GSTimer(QString alias, int time, uint32_t count)
     : GSObject(TO_Timer, alias)
 {
     timer = new QTimer();
     timer->setInterval(time);
-    timer->setSingleShot(!repeat);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(timeOut()));
 
+    _count = count;
+    _counter = 0;
     _signals.append("timeout");
     _slots << "start"
            << "stop"
@@ -26,9 +27,9 @@ int GSTimer::time()
     return timer->interval();
 }
 
-bool GSTimer::repeat()
+void GSTimer::setTime(int time)
 {
-    return !timer->isSingleShot();
+    timer->setInterval(time);
 }
 
 bool GSTimer::isActive()
@@ -43,30 +44,44 @@ void GSTimer::callSlot(QString slot)
     }
 }
 
+uint32_t GSTimer::count() const
+{
+    return _count;
+}
+
+void GSTimer::setCount(uint32_t value)
+{
+    _count = value;
+}
+
 void GSTimer::start()
 {
-    if(!timer->isActive())
+    if(!timer->isActive()) {
         timer->start();
-
-    emit started();
+        emit started();
+    }
 }
 
 void GSTimer::restart()
 {
-    timer->stop();
-    timer->start();
-
-    emit started();
+    stop();
+    start();
 }
 
 void GSTimer::stop()
 {
     timer->stop();
-
+    _counter = 0;
     emit stopped();
 }
 
 void GSTimer::timeOut()
 {
     emit haveSignal(QString("%1.%2").arg(_alias).arg(_signals[0]));
+
+    if(_count != 0) {
+        _counter++;
+        if(_count <= _counter)
+            stop();
+    }
 }

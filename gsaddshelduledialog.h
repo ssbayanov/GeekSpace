@@ -22,7 +22,10 @@ public:
     ~GSTimeWithCheckBox();
 
     bool isChecked();
+    void setChecked(bool checked);
+
     QTime time();
+    void setTime(QTime time);
 
 private:
     QCheckBox *_check;
@@ -34,6 +37,7 @@ private slots:
 
 signals:
     void activated(int, int);
+    void timeEdit();
 };
 
 namespace Ui {
@@ -50,6 +54,11 @@ public:
 
     void setReservedNames(QStringList reservedNames);
 
+    void editSheldule(GSSheldule *sheldule);
+
+public slots:
+    int exec();
+
 signals:
     void accept(GSObject *);
 
@@ -57,18 +66,32 @@ private slots:
 
     void on_calendarOnce_clicked(const QDate &date);
 
-    void on_dateTimeOnce_dateTimeChanged(const QDateTime &dateTime);
-
-    void cellActivated(int row, int column);
+    void cellActivated(int, int column);
 
     void on_buttonBox_accepted();
 
-    void on_aliasEdit_textChanged(const QString &arg1);
+    void on_aliasEdit_textEdited(const QString &arg1);
+
+    void on_tabWidget_currentChanged(int index);
+
+    void on_repeatCheckBox_toggled(bool checked);
+
+    void recalcNextDate();
+
+    void on_dateTimeOnce_dateTimeChanged(const QDateTime &dateTime);
 
 private:
     Ui::GSAddSheldule *ui;
 
     QStringList _reservedNames;
+
+    void addNewColumnWeeklyTable();
+
+    void initWeeklyTable();
+
+    bool isEdit;
+
+    GSSheldule *_sheldule;
 };
 
 #endif // GSADDSHELDULE_H
