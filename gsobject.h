@@ -6,37 +6,19 @@
 
 class GSObject;
 
-//typedef struct {
-//    GSObject *object;
-//    QString slotName;
-//    quint8 slotCode;
-//} Slot;
-
-//typedef struct {
-//    GSObject *object;
-//    QString signalName;
-//    quint8 signalCode;
-//} Signal;
-
-typedef enum TypeObject {
-    TO_Object,
-    TO_Module,
-    TO_Timer,
-    TO_Sheldule,
-    TO_Process,
-    TO_Script
-} TypeObject;
-
-const QStringList typeNames = QStringList()
-        << "Объект"
-        << "Модуль"
-        << "Таймер"
-        << "Расписание";
-
 class GSObject : public QObject
 {
     Q_OBJECT
 public:
+    typedef enum TypeObject {
+        TO_Object,
+        TO_Module,
+        TO_Timer,
+        TO_Sheldule,
+        TO_Process,
+        TO_Script
+    } TypeObject;
+
     explicit GSObject(TypeObject type, QString alias, QTreeWidgetItem *item = 0, QObject *parent = 0);
     virtual ~GSObject();
 
@@ -44,6 +26,7 @@ public:
     QStringList slotsList();
 
     TypeObject type();
+    QString typeText();
     QTreeWidgetItem *item();
     void setItem(QTreeWidgetItem *item);
 
@@ -61,6 +44,13 @@ public slots:
 
 private:
     TypeObject _type;
+    const QStringList _typeNames = QStringList()
+            << "Объект"
+            << "Модуль"
+            << "Таймер"
+            << "Расписание"
+            << "Процесс"
+            << "Сценарий";
 
 protected:
     QStringList _signals;

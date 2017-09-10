@@ -20,7 +20,7 @@ GeekSpaceWindow::GeekSpaceWindow(QWidget *parent) :
 
     objects.clear();
 
-    addScriptWindow = new GSAddSlotWindow(this);
+    addScriptWindow = new GSScriptEditor(this);
     addScriptWindow->setHidden(true);
     connect(addScriptWindow, SIGNAL(haveNewObject(GSObject*)), this, SLOT(addObject(GSObject*)));
     connect(addScriptWindow, SIGNAL(callingSlot(QString)), this, SLOT(callSlotByName(QString)));
@@ -198,19 +198,19 @@ void GeekSpaceWindow::doubleClickedByObject(QTreeWidgetItem *item)
     GSObject *object = (GSObject *)(item->data(1, Qt::UserRole).toUInt());
     if(object != NULL){
         switch (object->type()) {
-        case TO_Timer:
+        case GSObject::TO_Timer:
             timerDialog->setReservedNames(objects.keys());
             timerDialog->editTimer((GSTimer *)object);
             break;
-        case TO_Process:
+        case GSObject::TO_Process:
             processDialog->setReservedNames(objects.keys());
             processDialog->editProcess((GSProcess *)object);
             break;
-        case TO_Script:
+        case GSObject::TO_Script:
             addScriptWindow->loadObjects(objects);
             addScriptWindow->editScript((GSScript *)object);
             break;
-        case TO_Sheldule:
+        case GSObject::TO_Sheldule:
             shelduleDialog->setReservedNames(objects.keys());
             shelduleDialog->editSheldule((GSSheldule *)object);
             break;
@@ -268,23 +268,23 @@ void GeekSpaceWindow::on_treeModules_customContextMenuRequested(const QPoint &po
             QMenu *moduleMenu;
 
             switch (objs[i]->type()) {
-            case TO_Module:
+            case GSObject::TO_Module:
                 moduleMenu = modules->addMenu(objs[i]->alias());
                 moduleMenu->setIcon(QIcon(":/module"));
                 break;
-            case TO_Process:
+            case GSObject::TO_Process:
                 moduleMenu = processes->addMenu(objs[i]->alias());
                 moduleMenu->setIcon(QIcon(":/process"));
                 break;
-            case TO_Script:
+            case GSObject::TO_Script:
                 moduleMenu = scripts->addMenu(objs[i]->alias());
                 moduleMenu->setIcon(QIcon(":/script"));
                 break;
-            case TO_Sheldule:
+            case GSObject::TO_Sheldule:
                 moduleMenu = sheldules->addMenu(objs[i]->alias());
                 moduleMenu->setIcon(QIcon(":/sheldule"));
                 break;
-            case TO_Timer:
+            case GSObject::TO_Timer:
                 moduleMenu = timers->addMenu(objs[i]->alias());
                 moduleMenu->setIcon(QIcon(":/timer"));
                 break;
@@ -413,7 +413,7 @@ void GeekSpaceWindow::loadSettings()
     for(int i = 0; i < sheldulesGroups.count(); i++) {
         settings->beginGroup(sheldulesGroups[i]);
 
-        TypeSheldule type = (TypeSheldule) settings->value("type", -1).toInt();
+        GSSheldule::TypeSheldule type = (GSSheldule::TypeSheldule) settings->value("type", -1).toInt();
         if(type != -1) {
             GSSheldule *sheldule = new GSSheldule(sheldulesGroups[i],
                                                   type);
@@ -511,19 +511,19 @@ void GeekSpaceWindow::writeSettings()
     for(int i = 0; i < objs.count(); i++) {
         GSObject *object = objs[i];
         switch (object->type()) {
-        case TO_Module:
+        case GSObject::TO_Module:
             writeSettingsModule((GSModule *) object);
             break;
-        case TO_Timer:
+        case GSObject::TO_Timer:
             writeSettingsTimer((GSTimer *) object);
             break;
-        case TO_Sheldule:
+        case GSObject::TO_Sheldule:
             writeSettingsSheldule((GSSheldule *) object);
             break;
-        case TO_Process:
+        case GSObject::TO_Process:
             writeSettingsProcess((GSProcess *) object);
             break;
-        case TO_Script:
+        case GSObject::TO_Script:
             writeSettingsScript((GSScript *) object);
             break;
         default:
@@ -617,8 +617,8 @@ void GeekSpaceWindow::addObject(GSObject *object)
 {
     if(objects.contains(object->alias())) {
         writeError(QString("Ошибка добавления объекта типа %1. Объект %2 с именем %3 уже существует.")
-                   .arg(typeNames[object->type()])
-                .arg(typeNames[objects.value(object->alias())->type()])
+                   .arg(object->typeText())
+                .arg(objects.value(object->alias())->typeText())
                 .arg(object->alias()));
         return;
     }
@@ -634,19 +634,19 @@ void GeekSpaceWindow::addObject(GSObject *object)
             this, SLOT(writeMessage(QString)));
 
     switch (object->type()) {
-    case TO_Module:
+    case GSObject::TO_Module:
         addModuleItem((GSModule *) object);
         break;
-    case TO_Timer:
+    case GSObject::TO_Timer:
         addTimerItem((GSTimer *) object);
         break;
-    case TO_Sheldule:
+    case GSObject::TO_Sheldule:
         addShelduleItem((GSSheldule *) object);
         break;
-    case TO_Process:
+    case GSObject::TO_Process:
         addProcessItem((GSProcess *) object);
         break;
-    case TO_Script:
+    case GSObject::TO_Script:
         addScriptItem((GSScript *) object);
         connect(((GSScript *) object), SIGNAL(callingSlot(QString)), this, SLOT(callSlotByName(QString)));
         break;
@@ -768,7 +768,7 @@ void GeekSpaceWindow::updateObjectItem(GSObject *object)
     QTreeWidgetItem *updatingItem = object->item();
 
     if(updatingItem != NULL) {
-        if(object->type() == TO_Module) {
+        if(object->type() == GSObject::TO_Module) {
             GSModule *module = (GSModule*) object;
             QString moduleText = module->alias()
                     + QString("(%1:%2)").arg(module->address()).arg(module->port());

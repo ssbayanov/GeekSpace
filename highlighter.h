@@ -46,7 +46,6 @@
 #include <QHash>
 #include <QTextCharFormat>
 
-//! [0]
 class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
@@ -75,6 +74,5 @@ private:
     QTextCharFormat quotationFormat;
     QTextCharFormat functionFormat;
 };
-//! [0]
 
 #endif

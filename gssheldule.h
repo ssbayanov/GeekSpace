@@ -8,20 +8,21 @@
 
 #define maxInt 2147483648
 
-typedef enum TypeSheldule {
-    TS_Once,
-    TS_Dayly,
-    TS_Weekly,
-    TS_Monthly,
-    TS_Yearly
-} TypeSheldule;
-
 typedef QList <QDateTime> DateTimeList;
 
 class GSSheldule : public GSObject
 {
     Q_OBJECT
 public:
+
+    typedef enum TypeSheldule {
+        TS_Once,
+        TS_Dayly,
+        TS_Weekly,
+        TS_Monthly,
+        TS_Yearly
+    } TypeSheldule;
+
     GSSheldule(QString alias, TypeSheldule type);
 
     void addDate(QDateTime date);

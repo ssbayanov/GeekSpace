@@ -25,9 +25,14 @@ QStringList GSObject::slotsList()
     return _slots;
 }
 
-TypeObject GSObject::type()
+GSObject::TypeObject GSObject::type()
 {
     return _type;
+}
+
+QString GSObject::typeText()
+{
+    return _typeNames[_type];
 }
 
 QTreeWidgetItem *GSObject::item()

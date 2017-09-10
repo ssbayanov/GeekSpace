@@ -28,7 +28,6 @@ SOURCES += main.cpp\
         geekspacewindow.cpp \
     gscallfunctionmessage.cpp \
     highlighter.cpp \
-    gsaddslotwindow.cpp \
     gstextedit.cpp \
     gsmodule.cpp \
     gsabstractmessage.cpp \
@@ -42,13 +41,13 @@ SOURCES += main.cpp\
     gsprocess.cpp \
     gsaddprocessdialog.cpp \
     gsscript.cpp \
-    gssavescriptdialog.cpp
+    gssavescriptdialog.cpp \
+    gsscripteditor.cpp
 
 HEADERS  += geekspacewindow.h \
     gsmessages.h \
     gscallfunctionmessage.h \
     highlighter.h \
-    gsaddslotwindow.h \
     gstextedit.h \
     gsmodule.h \
     gsabstractmessage.h \
@@ -63,15 +62,20 @@ HEADERS  += geekspacewindow.h \
     gsprocess.h \
     gsaddprocessdialog.h \
     gsscript.h \
-    gssavescriptdialog.h
+    gssavescriptdialog.h \
+    gsscripteditor.h
 
 FORMS    += geekspacewindow.ui \
-    gsaddslotwindow.ui \
     gsappendmoduledialog.ui \
     gsaddshelduledialog.ui \
     gsaddtimerdialog.ui \
     gssavescriptdialog.ui \
-    gsaddprocessdialog.ui
+    gsaddprocessdialog.ui \
+    gsscripteditor.ui
 
 RESOURCES += \
     images.qrc
+
+STATECHARTS +=
+
+DISTFILES +=

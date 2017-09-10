@@ -1,5 +1,5 @@
-#include "gsaddslotwindow.h"
-#include "ui_gsaddslotwindow.h"
+#include "gsscripteditor.h"
+#include "ui_gsscripteditor.h"
 
 #include <QMdiSubWindow>
 #include <QFile>
@@ -14,9 +14,9 @@
 extern QString shortPathName(const QString & file);
 #endif
 
-GSAddSlotWindow::GSAddSlotWindow(QWidget *parent) :
+GSScriptEditor::GSScriptEditor(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::GSAddSlotWindow)
+    ui(new Ui::GSScriptEditor)
 {
     ui->setupUi(this);
 
@@ -59,12 +59,12 @@ GSAddSlotWindow::GSAddSlotWindow(QWidget *parent) :
     _scripts->setData(0, Qt::UserRole, TI_Type);
 }
 
-void GSAddSlotWindow::addNewSlot()
+void GSScriptEditor::addNewSlot()
 {
     on_actionNew_triggered();
 }
 
-void GSAddSlotWindow::loadObjects(ObjectsHash objects)
+void GSScriptEditor::loadObjects(ObjectsHash objects)
 {
     _objects = objects;
 
@@ -78,19 +78,19 @@ void GSAddSlotWindow::loadObjects(ObjectsHash objects)
 
     for(int i = 0; i < objs.count(); i++) {
         switch (objs[i]->type()) {
-        case TO_Module:
+        case GSSheldule::TO_Module:
             loadObjectTo(objs[i], _modules);
             break;
-        case TO_Process:
+        case GSSheldule::TO_Process:
             loadObjectTo(objs[i], _processes);
             break;
-        case TO_Script:
+        case GSSheldule::TO_Script:
             loadObjectTo(objs[i], _scripts);
             break;
-        case TO_Sheldule:
+        case GSSheldule::TO_Sheldule:
             loadObjectTo(objs[i], _sheldules);
             break;
-        case TO_Timer:
+        case GSSheldule::TO_Timer:
             loadObjectTo(objs[i], _timers);
             break;
         default:
@@ -99,7 +99,7 @@ void GSAddSlotWindow::loadObjects(ObjectsHash objects)
     }
 }
 
-void GSAddSlotWindow::loadObjectTo(GSObject *what, QTreeWidgetItem *item)
+void GSScriptEditor::loadObjectTo(GSObject *what, QTreeWidgetItem *item)
 {
     QTreeWidgetItem *newObject = new QTreeWidgetItem(item,
                                                      QStringList() << what->alias());
@@ -111,12 +111,12 @@ void GSAddSlotWindow::loadObjectTo(GSObject *what, QTreeWidgetItem *item)
     }
 }
 
-GSAddSlotWindow::~GSAddSlotWindow()
+GSScriptEditor::~GSScriptEditor()
 {
     delete ui;
 }
 
-void GSAddSlotWindow::editScript(GSScript *script)
+void GSScriptEditor::editScript(GSScript *script)
 {
 
     if(!isVisible()) {
@@ -162,7 +162,7 @@ void GSAddSlotWindow::editScript(GSScript *script)
     //connect(ui->mdiArea, SIGNAL())
 }
 
-void GSAddSlotWindow::exec()
+void GSScriptEditor::exec()
 {
     //setWindowModality(Qt::ApplicationModal);
     if(!isVisible()) {
@@ -172,7 +172,7 @@ void GSAddSlotWindow::exec()
     on_actionNew_triggered();
 }
 
-void GSAddSlotWindow::on_actionNew_triggered()
+void GSScriptEditor::on_actionNew_triggered()
 {
     GSTextEdit *newEdit = new GSTextEdit(this);
     QMdiSubWindow *newWindow = ui->mdiArea->addSubWindow(newEdit);
@@ -181,7 +181,7 @@ void GSAddSlotWindow::on_actionNew_triggered()
     newWindow->setProperty("type", TSW_New);
 }
 
-void GSAddSlotWindow::on_actionCheck_triggered()
+void GSScriptEditor::on_actionCheck_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
     if(currentWindow != NULL) {
@@ -190,26 +190,26 @@ void GSAddSlotWindow::on_actionCheck_triggered()
     }
 }
 
-void GSAddSlotWindow::writeMessage(QString msg)
+void GSScriptEditor::writeMessage(QString msg)
 {
     if(!ui->dockConsole->isVisible())
         ui->dockConsole->setVisible(true);
     ui->console->append(msg);
 }
 
-void GSAddSlotWindow::readFromCompiller()
+void GSScriptEditor::readFromCompiller()
 {
     QString compillerOutput = processCompiller->readAllStandardOutput();
     writeMessage(compillerOutput);
 }
 
-void GSAddSlotWindow::readErrorCompiller()
+void GSScriptEditor::readErrorCompiller()
 {
     QString compillerError = processCompiller->readAllStandardError();
     writeMessage(QString("Ошибка в процессе компиляции:\r\n%1").arg(compillerError));
 }
 
-void GSAddSlotWindow::finishedCompiller(int exitCode)
+void GSScriptEditor::finishedCompiller(int exitCode)
 {
     if(exitCode > 0) {
         writeMessage(QString("Ошибка процесс компиляции завершился с кодом %1").arg(exitCode));
@@ -219,7 +219,7 @@ void GSAddSlotWindow::finishedCompiller(int exitCode)
     }
 }
 
-void GSAddSlotWindow::on_actionUndo_triggered()
+void GSScriptEditor::on_actionUndo_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
     if(currentWindow != NULL) {
@@ -227,7 +227,7 @@ void GSAddSlotWindow::on_actionUndo_triggered()
     }
 }
 
-void GSAddSlotWindow::on_actionRedo_triggered()
+void GSScriptEditor::on_actionRedo_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
     if(currentWindow != NULL) {
@@ -235,7 +235,7 @@ void GSAddSlotWindow::on_actionRedo_triggered()
     }
 }
 
-void GSAddSlotWindow::consoleVisibleChanged(bool checked)
+void GSScriptEditor::consoleVisibleChanged(bool checked)
 {
     if(ui->dockConsole->parent() != NULL) {
         if(!((QMainWindow *)ui->dockConsole->parent())->isMinimized())
@@ -243,7 +243,7 @@ void GSAddSlotWindow::consoleVisibleChanged(bool checked)
     }
 }
 
-void GSAddSlotWindow::actionsVisibleChanged(bool checked)
+void GSScriptEditor::actionsVisibleChanged(bool checked)
 {
 
     if(ui->dockActions->parent() != NULL) {
@@ -252,14 +252,14 @@ void GSAddSlotWindow::actionsVisibleChanged(bool checked)
     }
 }
 
-void GSAddSlotWindow::clearItem(QTreeWidgetItem *item)
+void GSScriptEditor::clearItem(QTreeWidgetItem *item)
 {
     while(item->childCount()) {
         delete item->child(0);
     }
 }
 
-void GSAddSlotWindow::on_treeActions_itemDoubleClicked(QTreeWidgetItem *item, int)
+void GSScriptEditor::on_treeActions_itemDoubleClicked(QTreeWidgetItem *item, int)
 {
     if(item != NULL) {
         TypeItem type = (TypeItem) (item->data(0, Qt::UserRole).toInt());
@@ -275,7 +275,7 @@ void GSAddSlotWindow::on_treeActions_itemDoubleClicked(QTreeWidgetItem *item, in
     }
 }
 
-void GSAddSlotWindow::on_actionSaveScript_triggered()
+void GSScriptEditor::on_actionSaveScript_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
     if(currentWindow != NULL) {
@@ -298,7 +298,7 @@ void GSAddSlotWindow::on_actionSaveScript_triggered()
     }
 }
 
-void GSAddSlotWindow::on_actionSaveScriptAs_triggered()
+void GSScriptEditor::on_actionSaveScriptAs_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
 
@@ -331,7 +331,7 @@ void GSAddSlotWindow::on_actionSaveScriptAs_triggered()
     }
 }
 
-bool GSAddSlotWindow::isValidScript(QString script)
+bool GSScriptEditor::isValidScript(QString script)
 {
     QStringList scriptList = GSScript::getScriptList(script);
 
@@ -374,7 +374,7 @@ bool GSAddSlotWindow::isValidScript(QString script)
     return true;
 }
 
-void GSAddSlotWindow::saveScriptToFile(QString scriptName, QString data)
+void GSScriptEditor::saveScriptToFile(QString scriptName, QString data)
 {
     extern QString scriptsFolder;
     QString fullPath = scriptsFolder + scriptName +".gslc";
@@ -397,7 +397,7 @@ void GSAddSlotWindow::saveScriptToFile(QString scriptName, QString data)
 
 
 
-void GSAddSlotWindow::on_actionRun_triggered()
+void GSScriptEditor::on_actionRun_triggered()
 {
     QMdiSubWindow *currentWindow = ui->mdiArea->activeSubWindow();
 
@@ -423,12 +423,12 @@ void GSAddSlotWindow::on_actionRun_triggered()
     }
 }
 
-void GSAddSlotWindow::callSlot(QString slot)
+void GSScriptEditor::callSlot(QString slot)
 {
     emit callingSlot(slot);
 }
 
-void GSAddSlotWindow::closeTab(QObject *tab)
+void GSScriptEditor::closeTab(QObject *tab)
 {
     //QMdiSubWindow *closingTab =
 }

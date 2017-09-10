@@ -69,7 +69,7 @@ DateTimeList GSSheldule::dateTimes()
     return _dates;
 }
 
-TypeSheldule GSSheldule::typeSheldule()
+GSSheldule::TypeSheldule GSSheldule::typeSheldule()
 {
     return _typeSheldule;
 }

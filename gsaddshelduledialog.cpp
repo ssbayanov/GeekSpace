@@ -43,7 +43,7 @@ void GSAddShelduleDialog::editSheldule(GSSheldule *sheldule)
     initWeeklyTable();
     addNewColumnWeeklyTable();
 
-    if (sheldule->typeSheldule() == TS_Once
+    if (sheldule->typeSheldule() == GSSheldule::TS_Once
             || sheldule->dateTimes().count() > 1) {
         ui->repeatCheckBox->setChecked(false);
     }
@@ -54,11 +54,11 @@ void GSAddShelduleDialog::editSheldule(GSSheldule *sheldule)
     on_repeatCheckBox_toggled(ui->repeatCheckBox->isChecked());
 
     switch (sheldule->typeSheldule()) {
-    case TS_Once:
-    case TS_Dayly:
+    case GSSheldule::TS_Once:
+    case GSSheldule::TS_Dayly:
         ui->repeatTimeComboBox->setCurrentIndex(0);
         break;
-    case TS_Weekly:
+    case GSSheldule::TS_Weekly:
         ui->repeatTimeComboBox->setCurrentIndex(0);
 
         if (sheldule->dateTimes().count() > 1) {
@@ -100,10 +100,10 @@ void GSAddShelduleDialog::editSheldule(GSSheldule *sheldule)
             ui->repeatTimeComboBox->setCurrentIndex(1);
         }
         break;
-    case TS_Monthly:
+    case GSSheldule::TS_Monthly:
         ui->repeatTimeComboBox->setCurrentIndex(2);
         break;
-    case TS_Yearly:
+    case GSSheldule::TS_Yearly:
         ui->repeatTimeComboBox->setCurrentIndex(3);
         break;
     default:
@@ -162,7 +162,7 @@ void GSAddShelduleDialog::cellActivated(int, int column)
 void GSAddShelduleDialog::on_buttonBox_accepted()
 {
     DateTimeList weeklyDateTimes;
-    TypeSheldule typeSheldule;
+    GSSheldule::TypeSheldule typeSheldule;
 
 
 
@@ -171,29 +171,29 @@ void GSAddShelduleDialog::on_buttonBox_accepted()
         if(ui->repeatCheckBox->isChecked()) {
             switch (ui->repeatTimeComboBox->currentIndex()) {
             case 0: //dayly
-                typeSheldule = TS_Dayly;
+                typeSheldule = GSSheldule::TS_Dayly;
                 break;
             case 1: //weekly
-                typeSheldule = TS_Weekly;
+                typeSheldule = GSSheldule::TS_Weekly;
                 break;
             case 2: //monthly
-                typeSheldule = TS_Dayly;
+                typeSheldule = GSSheldule::TS_Dayly;
                 break;
             case 3: //yearly
-                typeSheldule = TS_Yearly;
+                typeSheldule = GSSheldule::TS_Yearly;
                 break;
             default:
                 break;
             }
         }
         else {
-            typeSheldule = TS_Once;
+            typeSheldule = GSSheldule::TS_Once;
         }
 
         weeklyDateTimes.append(ui->dateTimeOnce->dateTime());
         break;
     case 1: //weekly
-        typeSheldule = TS_Weekly;
+        typeSheldule = GSSheldule::TS_Weekly;
 
         for(int row = 0; row < ui->weeklyTable->rowCount(); row++) {
             for(int col =0; col < ui->weeklyTable->columnCount(); col++) {
@@ -315,16 +315,16 @@ void GSAddShelduleDialog::recalcNextDate()
         else {
             switch (ui->repeatTimeComboBox->currentIndex()) {
             case 0:
-                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), TS_Dayly);
+                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), GSSheldule::TS_Dayly);
                 break;
             case 1:
-                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), TS_Weekly);
+                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), GSSheldule::TS_Weekly);
                 break;
             case 2:
-                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), TS_Monthly);
+                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), GSSheldule::TS_Monthly);
                 break;
             case 3:
-                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), TS_Yearly);
+                nextDateTime = GSSheldule::nextDate(ui->dateTimeOnce->dateTime(), GSSheldule::TS_Yearly);
                 break;
             default:
                 break;
@@ -341,7 +341,7 @@ void GSAddShelduleDialog::recalcNextDate()
                         QDateTime newDate = QDateTime::currentDateTime().addDays(rows - dayOfWeek);
                         newDate.setTime(QTime());
                         newDate.setTime(timeWidget->time());
-                        newDate = GSSheldule::nextDate(newDate, TS_Weekly);
+                        newDate = GSSheldule::nextDate(newDate, GSSheldule::TS_Weekly);
 
                         if(nextDateTime.toMSecsSinceEpoch() == 0) {
                             nextDateTime = newDate;

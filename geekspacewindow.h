@@ -5,7 +5,7 @@
 #include <QSettings>
 
 #include "gsobjects.h"
-#include "gsaddslotwindow.h"
+#include "gsscripteditor.h"
 #include "gsaddmoduledialog.h"
 #include "gsaddtimerdialog.h"
 #include "gsaddshelduledialog.h"
@@ -15,32 +15,46 @@ namespace Ui {
 class GeekSpaceWindow;
 }
 
-typedef enum TypeItem {
-    TI_Object,
-    TI_Slot,
-    TI_Signal,
-    TI_ConnectionSignal,
-    TI_ConnectionSlot,
-    TI_Other
-} TypeItem;
-
-typedef enum TypeMessage {
-    TM_Info,
-    TM_Dedug,
-    TM_Warning,
-    TM_Error
-} TypeMessage;
-
+/**
+ * @brief The GeekSpaceWindow class main window of system
+ */
 class GeekSpaceWindow : public QMainWindow
 {
     Q_OBJECT
 
+private:
+
+    typedef enum TypeMessage {
+        TM_Info,
+        TM_Dedug,
+        TM_Warning,
+        TM_Error
+    } TypeMessage;
+
+    typedef enum TypeItem {
+        TI_Object,
+        TI_Slot,
+        TI_Signal,
+        TI_ConnectionSignal,
+        TI_ConnectionSlot,
+        TI_Other
+    } TypeItem;
+
 public:
+    /**
+     * @brief GeekSpaceWindow
+     * @param parent
+     */
+
     explicit GeekSpaceWindow(QWidget *parent = 0);
 
     ~GeekSpaceWindow();
 
 private slots:
+    /**
+     * @brief addObject add object to system. Connected messaging signals to console output and call functions adding item to three by type of objects
+     * @param object new object to add.
+     */
     void addObject(GSObject *object);
 
     void writeMessage(QString msg, TypeMessage type);
@@ -96,7 +110,7 @@ private:
 
     Ui::GeekSpaceWindow *ui;
 
-    GSAddSlotWindow *addScriptWindow;
+    GSScriptEditor *addScriptWindow;
     GSAddModuleDialog *addModuleDialog;
     GSAddSignalTimerDialog *timerDialog;
     GSAddShelduleDialog *shelduleDialog;

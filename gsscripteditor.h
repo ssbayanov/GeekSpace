@@ -10,10 +10,10 @@
 #include "gssavescriptdialog.h"
 
 namespace Ui {
-class GSAddSlotWindow;
+class GSScriptEditor;
 }
 
-class GSAddSlotWindow : public QMainWindow
+class GSScriptEditor : public QMainWindow
 {
     Q_OBJECT
 
@@ -29,7 +29,7 @@ class GSAddSlotWindow : public QMainWindow
     } TypeSubWindow;
 
 public:
-    explicit GSAddSlotWindow(QWidget *parent = 0);
+    explicit GSScriptEditor(QWidget *parent = 0);
 
     void addNewSlot();
 
@@ -37,7 +37,7 @@ public:
 
     void loadObjectTo(GSObject *what, QTreeWidgetItem *item);
 
-    ~GSAddSlotWindow();
+    ~GSScriptEditor();
 
     void editScript(GSScript *script);
 
@@ -87,7 +87,7 @@ private slots:
 private:
     bool isValidScript(QString script);
 
-    Ui::GSAddSlotWindow *ui;
+    Ui::GSScriptEditor *ui;
     QSplitter splitter;
 
     QProcess *processCompiller;
